@@ -50,3 +50,19 @@
   bottom: -60px;
   border-radius: 100%;
 }
+.quizz-page {
+  position: relative;
+  background-color: #f5f7fb;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 80px;
+  padding-left: 220px;
+}
+.submit-btn {
+  width: 180px;
+  background-color: #4d5b9e;
+  padding: 12px 30px;
+  color: white;
+  border-radius: 15px;
+  border: none;
+}
