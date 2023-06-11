@@ -66,6 +66,7 @@
   color: white;
   border-radius: 15px;
   border: none;
+  z-index: 2;
 }
 .options {
   list-style: none;
@@ -75,18 +76,25 @@
 }
 .each-question {
   margin: 20px auto;
+  z-index: 2;
 }
 .option-input {
   display: none;
 }
+.option-input:checked + label {
+  background-color: #d6dbf5;
+}
 .option-input-label {
   /* background-color: #d6dbf5; */
   background-color: transparent;
-  border: 3px solid #2a3e9f;
+  border: 2px solid #2a3e9f;
   padding: 6px 9px;
   border-radius: 8px;
   color: #2a3e9f;
 }
-.option-input:checked + label {
-  background-color: #d6dbf5;
+.wrong-answer + label{
+  background-color: rgb(215, 66, 66);
+}
+.correct-answer + label{
+  background-color: rgb(85, 231, 85);
 }
