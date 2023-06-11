@@ -9,11 +9,22 @@ import {
 import { HomePage } from "./components/HomePage";
 import { QuizzPage } from "./components/QuizzPage";
 import { NoPage } from "./components/NoPage";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+// import { decode } from "html-entities";
+// import { EachQuestion, EachQuestionProps } from "./components/EachQuestion";
+// import { nanoid } from "nanoid";
 
 function App() {
+
+  // const [start, setStart] = useState(false)
+  // const [quizz, setQuizz] = useState([]);
+  // const [restart, setRestart] = useState(false)
+  // const [score, setScore] = useState(0)
+  // const [submitted, setSubmitted] = useState(false)
+ 
   return (
     <>
+    {/* {!start && <HomePage setStart={setStart} />} */}
       <BrowserRouter>
         <Routes>
           <Route index element={<HomePage />} />
