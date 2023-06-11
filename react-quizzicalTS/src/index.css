@@ -67,6 +67,17 @@
   border-radius: 15px;
   border: none;
   z-index: 2;
+  margin-top: 20px;
+  margin-left: 70px;
+}
+.play-again-btn{
+  width: 180px;
+  background-color: #4d5b9e;
+  padding: 12px 30px;
+  color: white;
+  border-radius: 15px;
+  border: none;
+  z-index: 2;
 }
 .options {
   list-style: none;
@@ -97,4 +108,16 @@
 }
 .correct-answer + label{
   background-color: rgb(85, 231, 85);
+}
+.quizz-wrapper{
+  margin-top: 50px;
+  margin-left: 70px;
+}
+.btn-flex{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 20px;
+  /* margin-top: 20px;*/
+  margin-left: 70px; 
 }

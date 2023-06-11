@@ -2,16 +2,16 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 
 export type EachQuestionProps = {
-  key: string;
+  id: string;
   question: string;
   options: string[];
-  answer: string | boolean;
-  // markSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // answer: string | boolean;
   markSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  selectedAns: string
+  // markSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // selectedAns: string
 };
 
-export function EachQuestion({ question, options, answer, markSelected }: EachQuestionProps) {
+export function EachQuestion({ question, options, markSelected, id }: EachQuestionProps) {
     
   // if(e.target.checked) console.log(e.target.value)
   // const randomId = nanoid()
@@ -28,7 +28,7 @@ export function EachQuestion({ question, options, answer, markSelected }: EachQu
               id={opt+randomId}
               className="option-input"
               type="radio"
-              name={question}
+              name={id}
               value={opt}
               onChange={(event) => markSelected(event)}
             />
