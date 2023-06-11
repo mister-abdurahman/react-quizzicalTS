@@ -5,6 +5,8 @@ import { HomePage } from "./components/HomePage";
 import { nanoid } from "nanoid";
 import { decode } from "html-entities";
 import { EachQuestion } from "./components/EachQuestion";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { NoPage } from "./components/NoPage";
 
 type quizzProps = {
   question: string
@@ -101,6 +103,25 @@ export default function App() {
   }
 
   return (
+    // <BrowserRouter>
+    //     <Routes>
+    //       <Route index element={<HomePage setStart={setStart} id={nanoid()}/>} />
+    //       <Route path="/start-quizz" element={
+    //         <>
+    //         {<div className="quizz-wrapper"> {quizzArray} </div>}
+    //         {!playAgain && <button className="submit-btn" onClick={checkAnswers}>Check Answers</button>}
+    //         {playAgain && 
+    //           <div className="btn-flex">
+    //           <button className="play-again-btn" onClick={playAgainFn}>Play Again</button>
+    //           <h4 className="text">You scored {numOfCorrect} of {quizz.length}</h4>
+    //           </div>
+    //         }
+    //         </>
+    //       } />
+    //       <Route path="*" element={<NoPage />} />
+    //       <Route />
+    //     </Routes>
+    //   </BrowserRouter>
     <main>
       {!start && <HomePage setStart={setStart} id={nanoid()} />}
       {start && <div className="quizz-wrapper"> {quizzArray} </div>}
