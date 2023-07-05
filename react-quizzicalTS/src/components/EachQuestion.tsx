@@ -31,4 +31,4 @@ export function EachQuestion({ question, options, answer }: EachQuestionProps) {
       </ul>
     </div>
   );
-}
+} 
