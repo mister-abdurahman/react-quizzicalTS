@@ -5,6 +5,7 @@ import { EachQuestion, EachQuestionProps } from "./EachQuestion";
 import { nanoid } from "nanoid";
 import { decode } from "html-entities";
 import "../index.css";
+import { Link } from "react-router-dom";
 
 // type quizzPageProps = {
 //   score: number
@@ -14,10 +15,12 @@ import "../index.css";
 // }
 export function QuizzPage() {
   const [quizz, setQuizz] = useState([]);
+  const [trackScore, setTrackScore] = useState([]);
   const [restart, setRestart] = useState(false);
   const [score, setScore] = useState(0);
   const [submitted, setSubmitted] = useState(false);
 
+  console.log(quizz);
   const markSelected = function (e: React.ChangeEvent<HTMLInputElement>) {
     quizz.forEach((el: EachQuestionProps) => {
       if (e.target.name === el.question) {
@@ -35,13 +38,16 @@ export function QuizzPage() {
       }
 
       if (eachQuizz.selectedAns !== eachQuizz.answer) {
-        return document
-          .getElementsByName(eachQuizz.question)
-          .forEach((eachInput: any) => {
-            if (eachInput.value === eachQuizz.answer) {
-              eachInput.classList.add("correct-answer");
-            }
-          });
+        const formEls = document.getElementById("the-form")?.ELEMENT_NODE;
+        console.log(formEls);
+        // return document
+        //   .getElementsByName(eachQuizz.question)
+        //   .forEach((eachInput: any) => {
+        //     if (eachInput.value === eachQuizz.answer) {
+        //       // eachInput.classList.add("correct-answer");
+        //       eachInput.classList.add("active");
+        //     }
+        //   });
       }
       // return document.getElementsByName(`${eachQuizz.question}`).forEach((el: any)=>{
       //     if(eachQuizz.answer === el.value) el.classList.add('correct-answer')
@@ -87,6 +93,7 @@ export function QuizzPage() {
         answer={eachQuizz.answer}
         markSelected={markSelected}
         selectedAns={eachQuizz.selectedAns}
+        // setTrackScore={setTrackScore}
       />
     );
   });
@@ -113,8 +120,8 @@ export function QuizzPage() {
 
   return (
     <div className="quizz-page">
-      <div className="top-blob"></div>
-      <div className="bottom-blob"></div>
+      {/* <div className="top-blob"></div>
+      <div className="bottom-blob"></div> */}
       {quizzArray}
       {!submitted && (
         <button className="submit-btn" onClick={submitQuizz}>
@@ -128,7 +135,7 @@ export function QuizzPage() {
             You scored {score} of {quizz.length} questions
           </h4>
           <button className="submit-btn play-again" onClick={playAgain}>
-            Play Again
+            <Link to={"/"}>Play Again</Link>
           </button>
         </div>
       )}

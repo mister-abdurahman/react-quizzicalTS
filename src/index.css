@@ -6,16 +6,21 @@
   padding: 0;
   font-family: "Karla", sans-serif;
 }
-.home {
+.container {
   position: relative;
   background-color: #f5f7fb;
   height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 20px;
-  overflow: hidden;
 }
 .head-text {
   font-size: 32px;
@@ -53,11 +58,12 @@
 }
 .quizz-page {
   position: relative;
-  background-color: #f5f7fb;
-  height: 100vh;
+  /* background-color: #f5f7fb;
+  height: 100vh; */
   overflow: hidden;
-  padding-top: 80px;
+  padding-top: 10px;
   padding-left: 150px;
+  z-index: 10;
 }
 .submit-btn {
   width: 180px;
@@ -92,9 +98,9 @@
   border-radius: 8px;
   color: #2a3e9f;
 }
-.wrong-answer + label{
+.option-input-label .active {
   background-color: rgb(215, 66, 66);
 }
-.correct-answer + label{
+.correct-answer + label {
   background-color: rgb(85, 231, 85);
 }
