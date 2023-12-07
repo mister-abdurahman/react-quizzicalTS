@@ -13,14 +13,43 @@ import { Link } from "react-router-dom";
 //   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
 //   submitted: boolean
 // }
+
+const dummyQuizzData: EachQuestionProps[] = [
+  {
+    question: "What is my name?",
+    options: ["Abdullah", "Zayd", "Abdurahman"],
+    answer: "Abdurahman",
+  },
+  {
+    question: "What is my name?",
+    options: ["Abdullah", "Zayd", "Abdurahman"],
+    answer: "Abdurahman",
+  },
+  {
+    question: "What is my name?",
+    options: ["Abdullah", "Zayd", "Abdurahman"],
+    answer: "Abdurahman",
+  },
+  {
+    question: "What is my name?",
+    options: ["Abdullah", "Zayd", "Abdurahman"],
+    answer: "Abdurahman",
+  },
+  {
+    question: "What is my name?",
+    options: ["Abdullah", "Zayd", "Abdurahman"],
+    answer: "Abdurahman",
+  },
+];
+
 export function QuizzPage() {
   const [quizz, setQuizz] = useState([]);
   const [trackScore, setTrackScore] = useState([]);
   const [restart, setRestart] = useState(false);
   const [score, setScore] = useState(0);
+  const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  console.log(quizz);
   const markSelected = function (e: React.ChangeEvent<HTMLInputElement>) {
     quizz.forEach((el: EachQuestionProps) => {
       if (e.target.name === el.question) {
@@ -30,6 +59,7 @@ export function QuizzPage() {
   };
 
   const submitQuizz = function () {
+    console.log(quizz);
     quizz.forEach((eachQuizz: EachQuestionProps) => {
       if (eachQuizz.answer === eachQuizz.selectedAns) {
         setScore((prev) => {
@@ -38,16 +68,17 @@ export function QuizzPage() {
       }
 
       if (eachQuizz.selectedAns !== eachQuizz.answer) {
-        const formEls = document.getElementById("the-form")?.ELEMENT_NODE;
-        console.log(formEls);
-        // return document
-        //   .getElementsByName(eachQuizz.question)
-        //   .forEach((eachInput: any) => {
-        //     if (eachInput.value === eachQuizz.answer) {
-        //       // eachInput.classList.add("correct-answer");
-        //       eachInput.classList.add("active");
-        //     }
-        //   });
+        return document
+          .getElementsByName(eachQuizz.question)
+          .forEach((eachInput: any) => {
+            if (eachInput.value === eachQuizz.answer) {
+              eachInput.classList.add("correct-answer");
+            }
+            if (eachInput.value === eachQuizz.selectedAns) {
+              console.log(eachQuizz.selectedAns);
+              eachInput.classList.add("wrong-answer");
+            }
+          });
       }
       // return document.getElementsByName(`${eachQuizz.question}`).forEach((el: any)=>{
       //     if(eachQuizz.answer === el.value) el.classList.add('correct-answer')
@@ -59,17 +90,22 @@ export function QuizzPage() {
   const playAgain = function () {
     setSubmitted(false);
     setScore(0);
-    setRestart((v) => !v);
+    setRestart(true);
   };
 
   useEffect(() => {
     async function fetchQuizz() {
+      setError("");
       const data = await fetch(
         "https://opentdb.com/api.php?amount=5&category=9"
       );
+      if (!data.ok) {
+        setError("An error occured");
+        throw new Error("An error occured");
+      }
       const dataJSON = await data.json();
       setQuizz(
-        dataJSON.results.map((data: any) => {
+        dataJSON.results?.map((data: any) => {
           return {
             question: decode(data.question),
             options: shuffleArray([
@@ -84,19 +120,22 @@ export function QuizzPage() {
     fetchQuizz();
   }, [restart]);
 
-  const quizzArray = quizz.map((eachQuizz: EachQuestionProps): ReactNode => {
-    return (
-      <EachQuestion
-        key={nanoid()}
-        question={eachQuizz.question}
-        options={eachQuizz.options}
-        answer={eachQuizz.answer}
-        markSelected={markSelected}
-        selectedAns={eachQuizz.selectedAns}
-        // setTrackScore={setTrackScore}
-      />
-    );
-  });
+  const quizzArray = quizz?.map(
+    (eachQuizz: EachQuestionProps, i: any): ReactNode => {
+      return (
+        <EachQuestion
+          // key={nanoid()}
+          key={i}
+          question={eachQuizz.question}
+          options={eachQuizz.options}
+          answer={eachQuizz.answer}
+          markSelected={markSelected}
+          selectedAns={eachQuizz.selectedAns}
+          // setTrackScore={setTrackScore}
+        />
+      );
+    }
+  );
 
   const shuffleArray = function (array: string[] | boolean[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -122,7 +161,7 @@ export function QuizzPage() {
     <div className="quizz-page">
       {/* <div className="top-blob"></div>
       <div className="bottom-blob"></div> */}
-      {quizzArray}
+      {error || quizzArray}
       {!submitted && (
         <button className="submit-btn" onClick={submitQuizz}>
           Check Answers
@@ -135,7 +174,9 @@ export function QuizzPage() {
             You scored {score} of {quizz.length} questions
           </h4>
           <button className="submit-btn play-again" onClick={playAgain}>
-            <Link to={"/"}>Play Again</Link>
+            <Link to={"/"} className="link-btn">
+              Play Again
+            </Link>
           </button>
         </div>
       )}

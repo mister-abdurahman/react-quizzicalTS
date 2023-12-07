@@ -2,13 +2,13 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 
 export type EachQuestionProps = {
-  key: string;
+  key?: string;
   question: string;
   options: string[];
   answer: string | boolean;
   // markSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  markSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  selectedAns: string;
+  markSelected?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  selectedAns?: string;
   setTrackScore?: () => void;
 };
 
@@ -24,8 +24,7 @@ EachQuestionProps) {
 
   function updateScoreTrack(e: React.FormEvent) {
     // e.preventDefault();
-
-    console.log(e);
+    // console.log(e);
   }
 
   return (
@@ -35,14 +34,14 @@ EachQuestionProps) {
         {options.map((opt, i) => {
           const randomId = Math.random();
           return (
-            <>
+            <div key={i}>
               <input
                 id={opt + randomId}
                 className="option-input"
                 type="radio"
                 name={question}
                 value={opt}
-                onChange={(event) => markSelected(event)}
+                onChange={(event) => markSelected && markSelected(event)}
                 onClick={(e: React.FormEvent) => updateScoreTrack(e)}
               />
               <label
@@ -51,7 +50,7 @@ EachQuestionProps) {
               >
                 {opt}
               </label>
-            </>
+            </div>
           );
         })}
       </form>

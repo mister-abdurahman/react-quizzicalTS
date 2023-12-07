@@ -73,6 +73,7 @@
   border-radius: 15px;
   border: none;
   z-index: 2;
+  margin-top: 1rem;
 }
 .options {
   list-style: none;
@@ -98,9 +99,21 @@
   border-radius: 8px;
   color: #2a3e9f;
 }
-.option-input-label .active {
-  background-color: rgb(215, 66, 66);
+/* for wrong answer chosen */
+.wrong-answer + label {
+  background-color: rgb(213, 107, 107) !important;
+  color: white;
 }
 .correct-answer + label {
   background-color: rgb(85, 231, 85);
+}
+
+.link-btn {
+  text-decoration: none;
+  color: white;
+}
+
+.link-btn:active {
+  text-decoration: none;
+  color: white;
 }
