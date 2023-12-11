@@ -44,10 +44,11 @@ const dummyQuizzData: EachQuestionProps[] = [
 
 export function QuizzPage() {
   const [quizz, setQuizz] = useState([]);
-  const [trackScore, setTrackScore] = useState([]);
+  const [fetched, setFetched] = useState(false);
   const [restart, setRestart] = useState(false);
   const [score, setScore] = useState(0);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const markSelected = function (e: React.ChangeEvent<HTMLInputElement>) {
@@ -96,13 +97,17 @@ export function QuizzPage() {
   useEffect(() => {
     async function fetchQuizz() {
       setError("");
+      setIsLoading(true);
+      setQuizz([]);
       const data = await fetch(
-        "https://opentdb.com/api.php?amount=5&category=9"
+        // "https://opentdb.com/api.php?amount=5&category=9"
+        "https://opentdb.com/api.php?amount=5"
       );
       if (!data.ok) {
-        setError("An error occured");
-        throw new Error("An error occured");
+        setIsLoading(false);
+        return setError("An error occured 😞");
       }
+      // throw new Error("An error occured");
       const dataJSON = await data.json();
       setQuizz(
         dataJSON.results?.map((data: any) => {
@@ -116,9 +121,13 @@ export function QuizzPage() {
           };
         })
       );
+      setIsLoading(false);
+      setError("");
     }
     fetchQuizz();
   }, [restart]);
+
+  console.log(quizz);
 
   const quizzArray = quizz?.map(
     (eachQuizz: EachQuestionProps, i: any): ReactNode => {
@@ -159,25 +168,30 @@ export function QuizzPage() {
 
   return (
     <div className="quizz-page">
-      {/* <div className="top-blob"></div>
-      <div className="bottom-blob"></div> */}
-      {error || quizzArray}
-      {!submitted && (
-        <button className="submit-btn" onClick={submitQuizz}>
-          Check Answers
-        </button>
-      )}
+      {(isLoading && <div className="loader"></div>) || (
+        <div className="quizz-box">
+          {(!quizzArray && error && (
+            <span className="error-box"> {error} </span>
+          )) ||
+            quizzArray}
+          {quizzArray && !submitted && (
+            <button className="submit-btn" onClick={submitQuizz}>
+              Check Answers
+            </button>
+          )}
 
-      {submitted && (
-        <div className="submitted">
-          <h4>
-            You scored {score} of {quizz.length} questions
-          </h4>
-          <button className="submit-btn play-again" onClick={playAgain}>
-            <Link to={"/"} className="link-btn">
-              Play Again
-            </Link>
-          </button>
+          {submitted && (
+            <div className="submitted">
+              <h4>
+                You scored {score} of {quizz.length} questions
+              </h4>
+              <button className="submit-btn play-again" onClick={playAgain}>
+                <Link to={"/"} className="link-btn">
+                  Play Again
+                </Link>
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

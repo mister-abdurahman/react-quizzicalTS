@@ -62,8 +62,15 @@
   height: 100vh; */
   overflow: hidden;
   padding-top: 10px;
-  padding-left: 150px;
+  padding-left: 1rem;
   z-index: 10;
+}
+
+@media screen and (max-width: 768px) {
+  .quizz-page {
+    padding: 1rem auto;
+    padding-left: 0;
+  }
 }
 .submit-btn {
   width: 180px;
@@ -78,12 +85,35 @@
 .options {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 7px;
   gap: 10px;
   margin-top: 10px;
 }
 .each-question {
   margin: 20px auto;
   z-index: 2;
+}
+@media screen and (max-width: 400px) {
+  .quizz-page {
+    margin: auto 8px;
+  }
+  .each-question > h3 {
+    font-size: 1rem;
+  }
+  .each-question > .options {
+    font-size: 0.85rem;
+  }
+  .submit-btn {
+    display: block;
+    margin: 1rem auto;
+  }
+  .submitted > h4 {
+    text-align: center;
+  }
+  .options {
+    row-gap: 1.2rem;
+  }
 }
 .option-input {
   display: none;
@@ -116,4 +146,34 @@
 .link-btn:active {
   text-decoration: none;
   color: white;
+}
+.error-box {
+  display: block;
+  text-align: center;
+}
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #514b82;
+  -webkit-mask: repeating-conic-gradient(
+      #0000 0deg,
+      #000 1deg 70deg,
+      #0000 71deg 90deg
+    ),
+    radial-gradient(
+      farthest-side,
+      #0000 calc(100% - var(--b) - 1px),
+      #000 calc(100% - var(--b))
+    );
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l5 1s infinite;
+}
+@keyframes l5 {
+  to {
+    transform: rotate(0.5turn);
+  }
 }
